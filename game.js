@@ -7,11 +7,24 @@ let snake = [
     {x: 8, y:10},
 ];
 
-let direction = {x:1, y:0}
+let direction = { x: 1, y: 0 };
+
+function randomFood() {
+    let pos;
+    do {
+        pos = {
+            x: Math.floor(Math.random() * COLS),
+            y: Math.floor(Math.random() * ROWS),
+        };
+    } while (snake.some(seg => seg.x === pos.x && seg.y === pos.y));
+    return pos;
+}
 
 const CELL_SIZE = 20;
 const COLS = canvas.width / CELL_SIZE;   // 20 columns
 const ROWS = canvas.height / CELL_SIZE;  // 20 rows
+
+let food = randomFood();
 
 function drawGrid() {
     for (let row = 0; row < ROWS; row++) {
@@ -34,6 +47,11 @@ function drawSnake() {
     });
 }
 
+function drawFood() {
+    ctx.fillStyle = "#e74c3c";
+    ctx.fillRect(food.x * CELL_SIZE, food.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+}
+
 function moveSnake() {
     const newHead = {
         x: snake[0].x + direction.x,
@@ -41,12 +59,18 @@ function moveSnake() {
     };
 
     snake.unshift(newHead);
-    snake.pop();
+
+    if (newHead.x === food.x && newHead.y === food.y) {
+        food = randomFood();  // spawn new food
+    } else {
+        snake.pop();          // only remove tail if no food eaten
+    }
 }
 
 function gameLoop() {
     moveSnake();
     drawGrid();
+    drawFood();
     drawSnake();
 }
 
