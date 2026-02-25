@@ -1,6 +1,14 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+let snake = [
+    {x: 10, y:10},
+    {x: 9, y:10},
+    {x: 8, y:10},
+];
+
+let direction = {x:1, y:0}
+
 const CELL_SIZE = 20;
 const COLS = canvas.width / CELL_SIZE;   // 20 columns
 const ROWS = canvas.height / CELL_SIZE;  // 20 rows
@@ -14,4 +22,41 @@ function drawGrid() {
     }
 }
 
-drawGrid();
+function drawSnake() {
+    snake.forEach((segment, index) => {
+        ctx.fillStyle = index === 0 ? "#a8e063" : "#5cb85c";
+        ctx.fillRect(
+            segment.x * CELL_SIZE,
+            segment.y * CELL_SIZE,
+            CELL_SIZE,
+            CELL_SIZE
+        );
+    });
+}
+
+function moveSnake() {
+    const newHead = {
+        x: snake[0].x + direction.x,
+        y: snake[0].y + direction.y,
+    };
+
+    snake.unshift(newHead);
+    snake.pop();
+}
+
+function gameLoop() {
+    moveSnake();
+    drawGrid();
+    drawSnake();
+}
+
+document.addEventListener("keydown", (event) => {
+    switch (event.key) {                                                                                                                                                                                
+        case "ArrowUp":    if (direction.y === 0) direction = { x: 0, y: -1 }; break;                                                                                                                   
+        case "ArrowDown":  if (direction.y === 0) direction = { x: 0, y: 1 };  break;                                                                                                                   
+        case "ArrowLeft":  if (direction.x === 0) direction = { x: -1, y: 0 }; break;                                                                                                                   
+        case "ArrowRight": if (direction.x === 0) direction = { x: 1, y: 0 };  break;                                                                                                                   
+    }                                                                                                                                                                                                   
+});
+
+setInterval(gameLoop, 150);
