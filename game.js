@@ -14,7 +14,7 @@ let snake = [
 let direction = { x: 1, y: 0 };
 let food = randomFood();
 let score = 0;
-let gameOver = false;
+let gameState = "title";  // "title" | "playing" | "gameover"
 let intervalId = null;
 
 function isCollision(head) {
@@ -78,6 +78,23 @@ function drawGameOver() {
     ctx.textAlign = "left";  // reset to default
 }
 
+function drawTitleScreen() {
+    ctx.fillStyle = "#1a1a1a";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.textAlign = "center";
+
+    ctx.fillStyle = "#a8e063";
+    ctx.font = "bold 64px monospace";
+    ctx.fillText("SNAKE", canvas.width / 2, canvas.height / 2 - 20);
+
+    ctx.fillStyle = "white";
+    ctx.font = "16px monospace";
+    ctx.fillText("Press SPACE to start", canvas.width / 2, canvas.height / 2 + 30);
+
+    ctx.textAlign = "left";
+}
+
 function moveSnake() {
     const newHead = {
         x: snake[0].x + direction.x,
@@ -85,7 +102,7 @@ function moveSnake() {
     };
 
     if (isCollision(newHead)) {
-        gameOver = true;
+        gameState = "gameover";
         clearInterval(intervalId);
         drawGameOver();
         return;
@@ -103,14 +120,14 @@ function moveSnake() {
 
 function gameLoop() {
     moveSnake();
-    if (gameOver) return;
+    if (gameState !== "playing") return;
     drawGrid();
     drawFood();
     drawSnake();
     drawScore();
 }
 
-function restart() {
+function startGame() {
     snake = [
         { x: 10, y: 10 },
         { x: 9,  y: 10 },
@@ -119,7 +136,7 @@ function restart() {
     direction = { x: 1, y: 0 };
     food = randomFood();
     score = 0;
-    gameOver = false;
+    gameState = "playing";
     clearInterval(intervalId);
     intervalId = setInterval(gameLoop, 150);
 }
@@ -130,9 +147,10 @@ document.addEventListener("keydown", (event) => {
         case "ArrowDown":  if (direction.y === 0) direction = { x: 0, y: 1 };  break;
         case "ArrowLeft":  if (direction.x === 0) direction = { x: -1, y: 0 }; break;
         case "ArrowRight": if (direction.x === 0) direction = { x: 1, y: 0 };  break;
+        case " ":          if (gameState === "title") startGame(); break;
         case "r":
-        case "R":          restart(); break;
+        case "R":          if (gameState === "gameover") startGame(); break;
     }
 });
 
-intervalId = setInterval(gameLoop, 150);
+drawTitleScreen();
