@@ -1,28 +1,34 @@
-import { CELL_SIZE, COLS, ROWS } from "./config.js";
-import { state } from "./state.js";
+import { CANVAS_SIZE, COLOR_SCHEMES } from "./config.js";
+import { state, settings } from "./state.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 export function drawGrid() {
-    for (let row = 0; row < ROWS; row++) {
-        for (let col = 0; col < COLS; col++) {
-            ctx.fillStyle = (row + col) % 2 === 0 ? "#2d4a1e" : "#263d19";
-            ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    const cellSize = CANVAS_SIZE / settings.gridSize;
+    const colors   = COLOR_SCHEMES[settings.colorScheme];
+    for (let row = 0; row < settings.gridSize; row++) {
+        for (let col = 0; col < settings.gridSize; col++) {
+            ctx.fillStyle = (row + col) % 2 === 0 ? colors.gridEven : colors.gridOdd;
+            ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
         }
     }
 }
 
 export function drawSnake() {
+    const cellSize = CANVAS_SIZE / settings.gridSize;
+    const colors   = COLOR_SCHEMES[settings.colorScheme];
     state.snake.forEach((segment, index) => {
-        ctx.fillStyle = index === 0 ? "#a8e063" : "#5cb85c";
-        ctx.fillRect(segment.x * CELL_SIZE, segment.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        ctx.fillStyle = index === 0 ? colors.snakeHead : colors.snakeBody;
+        ctx.fillRect(segment.x * cellSize, segment.y * cellSize, cellSize, cellSize);
     });
 }
 
 export function drawFood() {
-    ctx.fillStyle = "#e74c3c";
-    ctx.fillRect(state.food.x * CELL_SIZE, state.food.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    const cellSize = CANVAS_SIZE / settings.gridSize;
+    const colors   = COLOR_SCHEMES[settings.colorScheme];
+    ctx.fillStyle = colors.food;
+    ctx.fillRect(state.food.x * cellSize, state.food.y * cellSize, cellSize, cellSize);
 }
 
 export function drawScore() {
@@ -60,6 +66,7 @@ export function drawTitleScreen() {
     ctx.fillStyle = "white";
     ctx.font = "16px monospace";
     ctx.fillText("Press SPACE to start", canvas.width / 2, canvas.height / 2 + 30);
+    ctx.fillText("Press S for settings", canvas.width / 2, canvas.height / 2 + 55);
 
     ctx.textAlign = "left";
 }

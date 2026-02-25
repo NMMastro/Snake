@@ -1,19 +1,18 @@
-import { COLS, ROWS } from "./config.js";
-import { state } from "./state.js";
+import { state, settings } from "./state.js";
 
 export function randomFood() {
     let pos;
     do {
         pos = {
-            x: Math.floor(Math.random() * COLS),
-            y: Math.floor(Math.random() * ROWS),
+            x: Math.floor(Math.random() * settings.gridSize),
+            y: Math.floor(Math.random() * settings.gridSize),
         };
     } while (state.snake.some(seg => seg.x === pos.x && seg.y === pos.y));
     return pos;
 }
 
 export function isCollision(head) {
-    const hitWall = head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS;
+    const hitWall = head.x < 0 || head.x >= settings.gridSize || head.y < 0 || head.y >= settings.gridSize;
     const hitSelf = state.snake.some(seg => seg.x === head.x && seg.y === head.y);
     return hitWall || hitSelf;
 }

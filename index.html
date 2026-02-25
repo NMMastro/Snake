@@ -6,7 +6,43 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <canvas id="gameCanvas" width="315" height="315"></canvas>
+
+    <div id="settingsOverlay" class="hidden">
+        <div id="settingsPanel">
+            <h2>Settings</h2>
+
+            <div class="setting-group">
+                <label>Speed</label>
+                <div class="options">
+                    <button class="option-btn" data-setting="speed" data-value="200">Slow</button>
+                    <button class="option-btn" data-setting="speed" data-value="150">Normal</button>
+                    <button class="option-btn" data-setting="speed" data-value="75">Fast</button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>Map Size</label>
+                <div class="options">
+                    <button class="option-btn" data-setting="gridSize" data-value="9">Small</button>
+                    <button class="option-btn" data-setting="gridSize" data-value="15">Medium</button>
+                    <button class="option-btn" data-setting="gridSize" data-value="21">Large</button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>Colour Scheme</label>
+                <div class="options">
+                    <button class="option-btn" data-setting="colorScheme" data-value="classic">Classic</button>
+                    <button class="option-btn" data-setting="colorScheme" data-value="ocean">Ocean</button>
+                    <button class="option-btn" data-setting="colorScheme" data-value="sunset">Sunset</button>
+                    <button class="option-btn" data-setting="colorScheme" data-value="mono">Mono</button>
+                </div>
+            </div>
+
+            <button id="closeSettings">Back</button>
+        </div>
+    </div>
 
     <script type="module" src="js/main.js"></script>
 </body>

@@ -1,8 +1,8 @@
-import { SPEED } from "./config.js";
-import { state } from "./state.js";
+import { state, settings } from "./state.js";
 import { randomFood, moveSnake } from "./logic.js";
 import { drawGrid, drawSnake, drawFood, drawScore, drawGameOver, drawTitleScreen } from "./renderer.js";
 import { setupInput } from "./input.js";
+import { openSettings } from "./settings.js";
 
 function gameLoop() {
     moveSnake();
@@ -19,18 +19,19 @@ function gameLoop() {
 }
 
 export function startGame() {
+    const center = Math.floor(settings.gridSize / 2);
     state.snake = [
-        { x: 10, y: 10 },
-        { x: 9,  y: 10 },
-        { x: 8,  y: 10 },
+        { x: center,     y: center },
+        { x: center - 1, y: center },
+        { x: center - 2, y: center },
     ];
     state.direction = { x: 1, y: 0 };
     state.food = randomFood();
     state.score = 0;
     state.gameState = "playing";
     clearInterval(state.intervalId);
-    state.intervalId = setInterval(gameLoop, SPEED);
+    state.intervalId = setInterval(gameLoop, settings.speed);
 }
 
-setupInput(startGame);
+setupInput(startGame, openSettings);
 drawTitleScreen();
