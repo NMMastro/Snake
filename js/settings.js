@@ -1,5 +1,5 @@
-import { settings } from "./state.js";
-import { drawTitleScreen } from "./renderer.js";
+import { state, settings } from "./state.js";
+import { drawTitleScreen, drawGameOver } from "./renderer.js";
 
 const overlay = document.getElementById("settingsOverlay");
 
@@ -10,7 +10,11 @@ export function openSettings() {
 
 export function closeSettings() {
     overlay.classList.add("hidden");
-    drawTitleScreen();
+    if (state.gameState === "gameover") {
+        drawGameOver();
+    } else {
+        drawTitleScreen();
+    }
 }
 
 function syncButtons() {

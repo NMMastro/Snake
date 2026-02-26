@@ -6,7 +6,8 @@ export const settings = {
 
 export const state = {
     snake: [],
-    direction:  { x: 1, y: 0 },
+    direction:      { x: 1, y: 0 },
+    directionQueue: [],
     food:       { x: 0, y: 0 },
     score:      0,
     gameState:  "title",

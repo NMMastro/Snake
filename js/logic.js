@@ -18,6 +18,10 @@ export function isCollision(head) {
 }
 
 export function moveSnake() {
+    if (state.directionQueue.length > 0) {
+        state.direction = state.directionQueue.shift();
+    }
+
     const newHead = {
         x: state.snake[0].x + state.direction.x,
         y: state.snake[0].y + state.direction.y,

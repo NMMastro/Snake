@@ -49,6 +49,22 @@ export function drawGameOver() {
     ctx.font = "18px monospace";
     ctx.fillText("Score: " + state.score, canvas.width / 2, canvas.height / 2 + 16);
     ctx.fillText("Press R to restart", canvas.width / 2, canvas.height / 2 + 44);
+    ctx.fillText("Press S for settings", canvas.width / 2, canvas.height / 2 + 68);
+
+    ctx.textAlign = "left";
+}
+
+export function drawPause() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "white";
+    ctx.font = "bold 32px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText("PAUSED", canvas.width / 2, canvas.height / 2 - 24);
+
+    ctx.font = "16px monospace";
+    ctx.fillText("Press ESCAPE to resume", canvas.width / 2, canvas.height / 2 + 16);
 
     ctx.textAlign = "left";
 }

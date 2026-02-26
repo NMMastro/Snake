@@ -1,6 +1,6 @@
 import { state, settings } from "./state.js";
 import { randomFood, moveSnake } from "./logic.js";
-import { drawGrid, drawSnake, drawFood, drawScore, drawGameOver, drawTitleScreen } from "./renderer.js";
+import { drawGrid, drawSnake, drawFood, drawScore, drawGameOver, drawTitleScreen, drawPause } from "./renderer.js";
 import { setupInput } from "./input.js";
 import { openSettings } from "./settings.js";
 
@@ -26,6 +26,7 @@ export function startGame() {
         { x: center - 2, y: center },
     ];
     state.direction = { x: 1, y: 0 };
+    state.directionQueue = [];
     state.food = randomFood();
     state.score = 0;
     state.gameState = "playing";
@@ -33,5 +34,16 @@ export function startGame() {
     state.intervalId = setInterval(gameLoop, settings.speed);
 }
 
-setupInput(startGame, openSettings);
+export function togglePause() {
+    if (state.gameState === "playing") {
+        state.gameState = "paused";
+        clearInterval(state.intervalId);
+        drawPause();
+    } else if (state.gameState === "paused") {
+        state.gameState = "playing";
+        state.intervalId = setInterval(gameLoop, settings.speed);
+    }
+}
+
+setupInput(startGame, togglePause, openSettings);
 drawTitleScreen();
