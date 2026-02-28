@@ -1,4 +1,4 @@
-export const CANVAS_SIZE = 315;
+export const CANVAS_SIZE = 315; // logical render size - CSS handles display scaling
 
 export const SPEED_OPTIONS = {
     slow:   200,

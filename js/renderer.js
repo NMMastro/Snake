@@ -3,6 +3,8 @@ import { state, settings } from "./state.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+canvas.width  = CANVAS_SIZE;
+canvas.height = CANVAS_SIZE;
 
 export function drawGrid() {
     const cellSize = CANVAS_SIZE / settings.gridSize;
