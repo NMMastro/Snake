@@ -1,4 +1,5 @@
 import { state } from "./state.js";
+import { playButtonSound } from "./audio.js";
 
 function enqueueDirection(newDir) {
     const last = state.directionQueue.length > 0
@@ -22,12 +23,12 @@ export function setupInput(startGame, togglePause, openSettings) {
             case "ArrowDown":  enqueueDirection({ x: 0, y: 1 });  break;
             case "ArrowLeft":  enqueueDirection({ x: -1, y: 0 }); break;
             case "ArrowRight": enqueueDirection({ x: 1, y: 0 });  break;
-            case " ":          if (state.gameState === "title") startGame(); break;
-            case "Escape":     if (state.gameState === "playing" || state.gameState === "paused") togglePause(); break;
+            case " ":          if (state.gameState === "title") { playButtonSound(); startGame(); } break;
+            case "Escape":     if (state.gameState === "playing" || state.gameState === "paused") { playButtonSound(); togglePause(); } break;
             case "s":
-            case "S":          if (state.gameState === "title" || state.gameState === "gameover") openSettings(); break;
+            case "S":          if (state.gameState === "title" || state.gameState === "gameover") { playButtonSound(); openSettings(); } break;
             case "r":
-            case "R":          if (state.gameState === "gameover") startGame(); break;
+            case "R":          if (state.gameState === "gameover") { playButtonSound(); startGame(); } break;
         }
     });
 }

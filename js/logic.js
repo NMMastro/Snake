@@ -1,4 +1,5 @@
 import { state, settings } from "./state.js";
+import { playEatSound } from "./audio.js";
 
 export function randomFood() {
     let pos;
@@ -38,6 +39,7 @@ export function moveSnake() {
     if (newHead.x === state.food.x && newHead.y === state.food.y) {
         state.score++;
         state.food = randomFood();
+        playEatSound();
     } else {
         state.snake.pop();
     }

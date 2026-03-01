@@ -1,5 +1,6 @@
 import { state, settings } from "./state.js";
 import { drawTitleScreen, drawGameOver } from "./renderer.js";
+import { playButtonSound } from "./audio.js";
 
 const overlay = document.getElementById("settingsOverlay");
 
@@ -27,6 +28,7 @@ function syncButtons() {
 
 document.querySelectorAll(".option-btn").forEach(btn => {
     btn.addEventListener("click", () => {
+        playButtonSound();
         const setting = btn.dataset.setting;
         const raw     = btn.dataset.value;
         settings[setting] = isNaN(raw) ? raw : Number(raw);
@@ -34,4 +36,7 @@ document.querySelectorAll(".option-btn").forEach(btn => {
     });
 });
 
-document.getElementById("closeSettings").addEventListener("click", closeSettings);
+document.getElementById("closeSettings").addEventListener("click", () => {
+    playButtonSound();
+    closeSettings();
+});
