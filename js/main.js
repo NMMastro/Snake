@@ -4,6 +4,7 @@ import { randomFood, moveSnake } from "./logic.js";
 import { drawGrid, drawSnake, drawFood, drawScore, drawGameOver, drawTitleScreen, drawPause } from "./renderer.js";
 import { setupInput } from "./input.js";
 import { openSettings } from "./settings.js";
+import { startBackground } from "./background.js";
 
 function gameLoop() {
     moveSnake();
@@ -52,4 +53,5 @@ export function togglePause() {
 }
 
 setupInput(startGame, togglePause, openSettings);
+startBackground();
 drawTitleScreen();
