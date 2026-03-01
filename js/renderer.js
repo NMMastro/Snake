@@ -37,6 +37,9 @@ export function drawScore() {
     ctx.fillStyle = "white";
     ctx.font = "16px monospace";
     ctx.fillText("Score: " + state.score, 8, 20);
+    ctx.textAlign = "right";
+    ctx.fillText("Best: " + state.highScore, CANVAS_SIZE - 8, 20);
+    ctx.textAlign = "left";
 }
 
 export function drawGameOver() {
@@ -50,7 +53,15 @@ export function drawGameOver() {
 
     ctx.font = "18px monospace";
     ctx.fillText("Score: " + state.score, canvas.width / 2, canvas.height / 2 + 16);
-    ctx.fillText("Press R to restart", canvas.width / 2, canvas.height / 2 + 44);
+    if (state.score >= state.highScore && state.score > 0) {
+        ctx.fillStyle = "#f0e040";
+        ctx.fillText("New Best!", canvas.width / 2, canvas.height / 2 + 44);
+        ctx.fillStyle = "white";
+        ctx.fillText("Press R to restart", canvas.width / 2, canvas.height / 2 + 70);
+    } else {
+        ctx.fillText("Best: " + state.highScore, canvas.width / 2, canvas.height / 2 + 44);
+        ctx.fillText("Press R to restart", canvas.width / 2, canvas.height / 2 + 70);
+    }
 
     ctx.textAlign = "left";
 }
@@ -83,6 +94,11 @@ export function drawTitleScreen() {
     ctx.fillStyle = "white";
     ctx.font = "16px monospace";
     ctx.fillText("Press SPACE to start", canvas.width / 2, canvas.height / 2 + 30);
+
+    if (state.highScore > 0) {
+        ctx.fillStyle = "rgba(255,255,255,0.5)";
+        ctx.fillText("Best: " + state.highScore, canvas.width / 2, canvas.height / 2 + 58);
+    }
 
     ctx.textAlign = "left";
 }

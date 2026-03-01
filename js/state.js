@@ -10,6 +10,7 @@ export const state = {
     directionQueue: [],
     food:       { x: 0, y: 0 },
     score:      0,
+    highScore:  parseInt(localStorage.getItem("snakeHighScore") || "0"),
     gameState:  "title",
     intervalId: null,
 };

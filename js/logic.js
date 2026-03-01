@@ -38,6 +38,10 @@ export function moveSnake() {
 
     if (newHead.x === state.food.x && newHead.y === state.food.y) {
         state.score++;
+        if (state.score > state.highScore) {
+            state.highScore = state.score;
+            localStorage.setItem("snakeHighScore", state.highScore);
+        }
         state.food = randomFood();
         playEatSound();
     } else {
