@@ -65,7 +65,7 @@ export function drawGameOver() {
 
     ctx.font = "18px monospace";
     ctx.fillText("Score: " + state.score, canvas.width / 2, canvas.height / 2 + 16);
-    if (state.score >= state.highScore && state.score > 0) {
+    if (state.score > state.highScore && state.score > 0) {
         ctx.fillStyle = "#f0e040";
         ctx.fillText("New Best!", canvas.width / 2, canvas.height / 2 + 44);
         ctx.fillStyle = "white";
