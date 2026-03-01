@@ -4,11 +4,10 @@ import { settings } from "./state.js";
 const bgCanvas = document.getElementById("bgCanvas");
 const bgCtx    = bgCanvas.getContext("2d");
 
-const CELL          = 30;
-const GHOST_LENGTH  = 20;
-const MOVE_INTERVAL = 180; // ms between steps
-const TURN_CHANCE   = 0.25;
-const NUM_SNAKES    = 15;
+const CELL         = 30;
+const GHOST_LENGTH = 20;
+const TURN_CHANCE  = 0.25;
+const NUM_SNAKES    = 20;
 
 const DIRS = [
     { x: 1, y: 0 }, { x: -1, y: 0 },
@@ -82,7 +81,7 @@ function drawGhosts() {
 }
 
 function tick(timestamp) {
-    if (timestamp - lastMoveTime >= MOVE_INTERVAL) {
+    if (timestamp - lastMoveTime >= settings.speed) {
         ghosts.forEach(moveGhost);
         lastMoveTime = timestamp;
     }

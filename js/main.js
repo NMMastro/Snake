@@ -1,5 +1,5 @@
 import { state, settings } from "./state.js";
-import { startMusic, stopMusic, playGameOverSound, playButtonSound } from "./audio.js";
+import { startMusic, pauseMusic, resumeMusic, stopMusic, playGameOverSound, playButtonSound } from "./audio.js";
 import { randomFood, moveSnake } from "./logic.js";
 import { drawGrid, drawSnake, drawFood, drawScore, drawGameOver, drawTitleScreen, drawPause } from "./renderer.js";
 import { setupInput } from "./input.js";
@@ -10,6 +10,9 @@ function gameLoop() {
     moveSnake();
 
     if (state.gameState === "gameover") {
+        drawGrid();
+        drawFood();
+        drawSnake();
         stopMusic();
         playGameOverSound();
         drawGameOver();
@@ -45,12 +48,12 @@ export function togglePause() {
     if (state.gameState === "playing") {
         state.gameState = "paused";
         clearInterval(state.intervalId);
-        stopMusic();
+        pauseMusic();
         drawPause();
     } else if (state.gameState === "paused") {
         state.gameState = "playing";
         state.intervalId = setInterval(gameLoop, settings.speed);
-        startMusic();
+        resumeMusic();
     }
     updateIcons();
 }

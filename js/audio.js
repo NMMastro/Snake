@@ -9,6 +9,14 @@ export function startMusic() {
     music.play();
 }
 
+export function pauseMusic() {
+    music.pause();
+}
+
+export function resumeMusic() {
+    music.play();
+}
+
 export function stopMusic() {
     music.pause();
     music.currentTime = 0;
