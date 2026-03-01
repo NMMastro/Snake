@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <title>Snake</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
     <canvas id="bgCanvas"></canvas>
-    <canvas id="gameCanvas"></canvas>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="gameIcons">
+            <button id="homeBtn"     class="icon-btn"><i data-lucide="house"></i></button>
+            <button id="settingsBtn" class="icon-btn"><i data-lucide="settings"></i></button>
+        </div>
+    </div>
 
     <div id="settingsOverlay" class="hidden">
         <div id="settingsPanel">

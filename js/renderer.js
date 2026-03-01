@@ -51,7 +51,6 @@ export function drawGameOver() {
     ctx.font = "18px monospace";
     ctx.fillText("Score: " + state.score, canvas.width / 2, canvas.height / 2 + 16);
     ctx.fillText("Press R to restart", canvas.width / 2, canvas.height / 2 + 44);
-    ctx.fillText("Press S for settings", canvas.width / 2, canvas.height / 2 + 68);
 
     ctx.textAlign = "left";
 }
@@ -63,10 +62,10 @@ export function drawPause() {
     ctx.fillStyle = "white";
     ctx.font = "bold 32px monospace";
     ctx.textAlign = "center";
-    ctx.fillText("PAUSED", canvas.width / 2, canvas.height / 2 - 24);
+    ctx.fillText("PAUSED", canvas.width / 2, canvas.height / 2 - 16);
 
     ctx.font = "16px monospace";
-    ctx.fillText("Press ESCAPE to resume", canvas.width / 2, canvas.height / 2 + 16);
+    ctx.fillText("Press SPACE to resume", canvas.width / 2, canvas.height / 2 + 16);
 
     ctx.textAlign = "left";
 }
@@ -77,14 +76,13 @@ export function drawTitleScreen() {
 
     ctx.textAlign = "center";
 
-    ctx.fillStyle = "#a8e063";
+    ctx.fillStyle = COLOR_SCHEMES[settings.colorScheme].snakeHead;
     ctx.font = "bold 64px monospace";
     ctx.fillText("SNAKE", canvas.width / 2, canvas.height / 2 - 20);
 
     ctx.fillStyle = "white";
     ctx.font = "16px monospace";
     ctx.fillText("Press SPACE to start", canvas.width / 2, canvas.height / 2 + 30);
-    ctx.fillText("Press S for settings", canvas.width / 2, canvas.height / 2 + 55);
 
     ctx.textAlign = "left";
 }

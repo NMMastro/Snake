@@ -1,5 +1,5 @@
 import { state, settings } from "./state.js";
-import { startMusic, stopMusic, playGameOverSound } from "./audio.js";
+import { startMusic, stopMusic, playGameOverSound, playButtonSound } from "./audio.js";
 import { randomFood, moveSnake } from "./logic.js";
 import { drawGrid, drawSnake, drawFood, drawScore, drawGameOver, drawTitleScreen, drawPause } from "./renderer.js";
 import { setupInput } from "./input.js";
@@ -13,6 +13,7 @@ function gameLoop() {
         stopMusic();
         playGameOverSound();
         drawGameOver();
+        updateIcons();
         return;
     }
 
@@ -37,6 +38,7 @@ export function startGame() {
     clearInterval(state.intervalId);
     state.intervalId = setInterval(gameLoop, settings.speed);
     startMusic();
+    updateIcons();
 }
 
 export function togglePause() {
@@ -50,8 +52,29 @@ export function togglePause() {
         state.intervalId = setInterval(gameLoop, settings.speed);
         startMusic();
     }
+    updateIcons();
 }
 
-setupInput(startGame, togglePause, openSettings);
+export function goHome() {
+    clearInterval(state.intervalId);
+    stopMusic();
+    state.gameState = "title";
+    drawTitleScreen();
+    updateIcons();
+}
+
+function updateIcons() {
+    const showSettings = state.gameState === "title" || state.gameState === "gameover";
+    const showHome     = state.gameState === "paused" || state.gameState === "gameover";
+    document.getElementById("settingsBtn").style.display = showSettings ? "flex" : "none";
+    document.getElementById("homeBtn").style.display     = showHome     ? "flex" : "none";
+}
+
+document.getElementById("settingsBtn").addEventListener("click", () => { playButtonSound(); openSettings(); });
+document.getElementById("homeBtn").addEventListener("click",     () => { playButtonSound(); goHome();       });
+
+setupInput(startGame, togglePause);
 startBackground();
 drawTitleScreen();
+updateIcons();
+lucide.createIcons();
