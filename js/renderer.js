@@ -20,17 +20,29 @@ export function drawGrid() {
 export function drawSnake() {
     const cellSize = CANVAS_SIZE / settings.gridSize;
     const colors   = COLOR_SCHEMES[settings.colorScheme];
+    const gap = 2;
     state.snake.forEach((segment, index) => {
         ctx.fillStyle = index === 0 ? colors.snakeHead : colors.snakeBody;
-        ctx.fillRect(segment.x * cellSize, segment.y * cellSize, cellSize, cellSize);
+        ctx.fillRect(
+            segment.x * cellSize + gap / 2,
+            segment.y * cellSize + gap / 2,
+            cellSize - gap,
+            cellSize - gap
+        );
     });
 }
 
 export function drawFood() {
     const cellSize = CANVAS_SIZE / settings.gridSize;
     const colors   = COLOR_SCHEMES[settings.colorScheme];
+    const gap = 2;
     ctx.fillStyle = colors.food;
-    ctx.fillRect(state.food.x * cellSize, state.food.y * cellSize, cellSize, cellSize);
+    ctx.fillRect(
+        state.food.x * cellSize + gap / 2,
+        state.food.y * cellSize + gap / 2,
+        cellSize - gap,
+        cellSize - gap
+    );
 }
 
 export function drawScore() {
